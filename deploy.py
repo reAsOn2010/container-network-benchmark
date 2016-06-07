@@ -66,7 +66,7 @@ def run_calico_tests():
             with open('./calico_benchmark.txt', 'a') as f:
                 print('same host:', file=f)
                 print(same_host_result, file=f)
-            same_host_result = sudo('docker exec worker-1 /tmp/usr/bin/iperf -c 192.168.100.2 -u ')
+            same_host_result = sudo('docker exec worker-1 /tmp/usr/bin/iperf -c 192.168.100.2 -u -b 100m')
             with open('./calico_benchmark.txt', 'a') as f:
                 print('same host:', file=f)
                 print(same_host_result, file=f)
@@ -76,7 +76,7 @@ def run_calico_tests():
             with open('./calico_benchmark.txt', 'a') as f:
                 print('cross host:', file=f)
                 print(cross_host_result, file=f)
-            cross_host_result = sudo('docker exec worker-3 /tmp/usr/bin/iperf -c 192.168.100.2 -u')
+            cross_host_result = sudo('docker exec worker-3 /tmp/usr/bin/iperf -c 192.168.100.2 -u -b 100m')
             with open('./calico_benchmark.txt', 'a') as f:
                 print('cross host:', file=f)
                 print(cross_host_result, file=f)
@@ -121,7 +121,7 @@ def run_flannel_env(t='vxlan'):
 
     if env.host_string in env.roledefs['node1']:
         sudo('docker run -v /bin:/tmp/bin -v /usr/bin:/tmp/usr/bin --name worker-1 -tid ubuntu /tmp/usr/bin/iperf -s')
-        sudo('docker run -v /bin:/tmp/bin -v /usr/bin:/tmp/usr/bin --name worker-2 -tid ubuntu')
+        sudo('docker run -v /bin:/tmp/bin -v /usr/bin:/tmp/usr/bin --name worker-2 -tid ubuntu /tmp/usr/bin/iperf -s -u')
         tmp = sudo('docker exec worker-1 /tmp/bin/ip addr')
         ip1 = tmp[tmp.find('192.168'):].split('/')[0]
         tmp = sudo('docker exec worker-2 /tmp/bin/ip addr')
@@ -141,8 +141,16 @@ def run_flannel_tests():
         with open('./flannel_benchmark.txt', 'a') as f:
             print('same host:', file=f)
             print(same_host_result, file=f)
+        same_host_result = sudo('docker exec worker-1 /tmp/usr/bin/iperf -c %s -u -b 100m' % ip2)
+        with open('./flannel_benchmark.txt', 'a') as f:
+            print('same host:', file=f)
+            print(same_host_result, file=f)
     elif env.host_string in env.roledefs['node2']:
         cross_host_result = sudo('docker exec worker-3 /tmp/usr/bin/iperf -c %s' % ip1)
+        with open('./flannel_benchmark.txt', 'a') as f:
+            print('cross host:', file=f)
+            print(cross_host_result, file=f)
+        cross_host_result = sudo('docker exec worker-3 /tmp/usr/bin/iperf -c %s -u -b 100m' % ip2)
         with open('./flannel_benchmark.txt', 'a') as f:
             print('cross host:', file=f)
             print(cross_host_result, file=f)
@@ -165,7 +173,7 @@ def run_weave_env():
     if env.host_string in env.roledefs['node1']:
         sudo('%s launch' % WEAVE)
         sudo('%s run -v /bin:/tmp/bin -v /usr/bin:/tmp/usr/bin -itd --name=worker-1 ubuntu /tmp/usr/bin/iperf -s' % WEAVE)
-        sudo('%s run -v /bin:/tmp/bin -v /usr/bin:/tmp/usr/bin -itd --name=worker-2 ubuntu' % WEAVE)
+        sudo('%s run -v /bin:/tmp/bin -v /usr/bin:/tmp/usr/bin -itd --name=worker-2 ubuntu /tmp/usr/bin/iperf -s -u' % WEAVE)
     elif env.host_string in env.roledefs['node2']:
         sudo('%s launch 192.168.56.101' % WEAVE)
         sudo('%s run -v /bin:/tmp/bin -v /usr/bin:/tmp/usr/bin -itd --name=worker-3 ubuntu' % WEAVE)
@@ -179,9 +187,17 @@ def run_weave_tests():
         with open('./weave_benchmark.txt', 'a') as f:
             print('same host:', file=f)
             print(same_host_result, file=f)
+        same_host_result = sudo('docker exec worker-2 /tmp/usr/bin/iperf -c worker-2 -u -b 100m')
+        with open('./weave_benchmark.txt', 'a') as f:
+            print('same host:', file=f)
+            print(same_host_result, file=f)
     elif env.host_string in env.roledefs['node2']:
         sudo('docker exec worker-3 /tmp/bin/ping -c 4 worker-1')
         cross_host_result = sudo('docker exec worker-3 /tmp/usr/bin/iperf -c worker-1')
+        with open('./weave_benchmark.txt', 'a') as f:
+            print('cross host:', file=f)
+            print(cross_host_result, file=f)
+        cross_host_result = sudo('docker exec worker-3 /tmp/usr/bin/iperf -c worker-2 -u -b 100m')
         with open('./weave_benchmark.txt', 'a') as f:
             print('cross host:', file=f)
             print(cross_host_result, file=f)
