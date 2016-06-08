@@ -1,0 +1,42 @@
+same host:
+------------------------------------------------------------
+Client connecting to 192.168.28.2, TCP port 5001
+TCP window size: 45.0 KByte (default)
+------------------------------------------------------------
+[  3] local 192.168.28.3 port 44300 connected with 192.168.28.2 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[  3]  0.0-10.0 sec  23.0 GBytes  19.8 Gbits/sec
+same host:
+------------------------------------------------------------
+Client connecting to 192.168.28.3, UDP port 5001
+Sending 1470 byte datagrams
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+[  3] local 192.168.28.2 port 34050 connected with 192.168.28.3 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[  3]  0.0-10.0 sec   119 MBytes   100 Mbits/sec
+[  3] Sent 85150 datagrams
+[  3] Server Report:
+[  3]  0.0-10.0 sec   119 MBytes   100 Mbits/sec   0.010 ms    0/85149 (0%)
+[  3]  0.0-10.0 sec  1 datagrams received out-of-order
+cross host:
+------------------------------------------------------------
+Client connecting to 192.168.28.2, TCP port 5001
+TCP window size: 45.0 KByte (default)
+------------------------------------------------------------
+[  3] local 192.168.82.2 port 47836 connected with 192.168.28.2 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[  3]  0.0-10.0 sec  1.69 GBytes  1.45 Gbits/sec
+cross host:
+------------------------------------------------------------
+Client connecting to 192.168.28.3, UDP port 5001
+Sending 1470 byte datagrams
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+[  3] local 192.168.82.2 port 42411 connected with 192.168.28.3 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[  3]  0.0-10.0 sec   119 MBytes  99.7 Mbits/sec
+[  3] Sent 84756 datagrams
+[  3] Server Report:
+[  3]  0.0-10.0 sec   119 MBytes  99.7 Mbits/sec   0.049 ms    0/84755 (0%)
+[  3]  0.0-10.0 sec  1 datagrams received out-of-order

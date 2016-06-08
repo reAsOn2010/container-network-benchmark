@@ -1,0 +1,42 @@
+same host:
+------------------------------------------------------------
+Client connecting to worker-1, TCP port 5001
+TCP window size: 45.0 KByte (default)
+------------------------------------------------------------
+[  3] local 10.32.0.2 port 39426 connected with 10.32.0.1 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[  3]  0.0-10.0 sec  24.8 GBytes  21.3 Gbits/sec
+same host:
+------------------------------------------------------------
+Client connecting to worker-2, UDP port 5001
+Sending 1470 byte datagrams
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+[  3] local 10.32.0.2 port 35775 connected with 10.32.0.2 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[  3]  0.0-10.0 sec   119 MBytes   100 Mbits/sec
+[  3] Sent 85178 datagrams
+[  3] Server Report:
+[  3]  0.0-10.0 sec   119 MBytes   100 Mbits/sec   0.010 ms    0/85177 (0%)
+[  3]  0.0-10.0 sec  1 datagrams received out-of-order
+cross host:
+------------------------------------------------------------
+Client connecting to worker-1, TCP port 5001
+TCP window size: 45.0 KByte (default)
+------------------------------------------------------------
+[  3] local 10.40.0.1 port 48514 connected with 10.32.0.1 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[  3]  0.0-10.0 sec  1.15 GBytes   991 Mbits/sec
+cross host:
+------------------------------------------------------------
+Client connecting to worker-2, UDP port 5001
+Sending 1470 byte datagrams
+UDP buffer size:  208 KByte (default)
+------------------------------------------------------------
+[  3] local 10.40.0.1 port 36826 connected with 10.32.0.2 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[  3]  0.0-10.0 sec   104 MBytes  87.6 Mbits/sec
+[  3] Sent 74509 datagrams
+[  3] Server Report:
+[  3]  0.0-10.0 sec   104 MBytes  87.5 Mbits/sec   0.141 ms  162/74508 (0.22%)
+[  3]  0.0-10.0 sec  1 datagrams received out-of-order
