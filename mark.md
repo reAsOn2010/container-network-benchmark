@@ -1,5 +1,10 @@
 ###Calico
 
+| Env | Bandwidth | Lantency | Packet loss(under 100Mbps) |
+| --- | --- | --- | --- |
+| same host | 21.4 Gbits/sec | 0.010 ms | None |
+| cross host| 1.54 Gbits/sec | 0.043 ms | None |
+
 1. 性能最好
 2. --ipip 模式下 不能发 udp 包
 3. ACL 容易做
