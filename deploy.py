@@ -206,7 +206,8 @@ def run_weave_tests():
 def stop_weave():
     with settings(warn_only=True):
         if env.host_string in env.roledefs['node1']:
-            sudo('docker rm -f worker-1 worker-2')
+            sudo('%s stop' % WEAVE)
+            sudo('docker ps -q | xargs docker rm -f')
         elif env.host_string in env.roledefs['node2']:
-            sudo('docker rm -f worker-3')
-        sudo('%s stop' % WEAVE)
+            sudo('%s stop' % WEAVE)
+            sudo('docker ps -q | xargs docker rm -f')
